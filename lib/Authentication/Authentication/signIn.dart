@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -55,7 +55,7 @@ class _LoginpageState extends State<Loginpage> {
               height: 500,
               width: double.maxFinite,
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 87, 145, 21),
+                color: Colors.white.withOpacity(0.15),
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(30),
                   topLeft: Radius.circular(30),
