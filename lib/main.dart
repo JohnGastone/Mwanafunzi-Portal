@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mwanafunziportal/SignIn/SignUp/signUp.dart';
+import 'package:mwanafunziportal/Authentication/signUp.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: SignUp(),
+      home: SignUpPage(),
     );
   }
 }
