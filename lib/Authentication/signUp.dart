@@ -72,7 +72,7 @@ class _SignUpPageState extends State<SignUpPage> {
               height: 600,
               width: double.maxFinite,
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 87, 145, 21),
+                color: Color.fromRGBO(255, 255, 255, 0.6),
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(30),
                   topLeft: Radius.circular(30),
