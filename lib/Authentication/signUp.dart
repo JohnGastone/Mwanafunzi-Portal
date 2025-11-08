@@ -1,9 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:mwanafunziPortal/signIn.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../explorePage.dart';
+import 'package:mwanafunziportal/Authentication/Authentication/signIn.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -185,31 +184,31 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white24,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    height: 50,
-                    width: 170,
-                    child: TextButton(
-                      child: Text(
-                        "Create account",
-                        style: GoogleFonts.poppins(
-                          fontSize: 18,
-                          color: Colors.white,
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MyHomePage(),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                  // Container(
+                  //   decoration: BoxDecoration(
+                  //     color: Colors.white24,
+                  //     borderRadius: BorderRadius.circular(16),
+                  //   ),
+                  //   height: 50,
+                  //   width: 170,
+                  //   child: TextButton(
+                  //     child: Text(
+                  //       "Create account",
+                  //       style: GoogleFonts.poppins(
+                  //         fontSize: 18,
+                  //         color: Colors.white,
+                  //       ),
+                  //     ),
+                  //     onPressed: () {
+                  //       Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //           builder: (context) => const MyHomePage(),
+                  //         ),
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
                   SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.only(left: 50),
