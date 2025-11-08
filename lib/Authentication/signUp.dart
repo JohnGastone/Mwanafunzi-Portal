@@ -1,8 +1,8 @@
-// ignore_for_file: prefer_const_constructors, deprecated_member_use
+// ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mwanafunziportal/Authentication/Authentication/signIn.dart';
+import 'package:mwanafunziportal/Authentication/signIn.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -72,7 +72,7 @@ class _SignUpPageState extends State<SignUpPage> {
               height: 600,
               width: double.maxFinite,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.15),
+                color: Color.fromARGB(255, 87, 145, 21),
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(30),
                   topLeft: Radius.circular(30),
