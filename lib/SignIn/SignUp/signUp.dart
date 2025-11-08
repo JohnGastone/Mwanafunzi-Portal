@@ -33,25 +33,16 @@ class SignUp extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SocialCard(
-                        icon: "assets/icons/google-icon.svg",
-                        press: () {},
-                      ),
-                      SocialCard(
-                        icon: "assets/icons/facebook-2.svg",
-                        press: () {},
-                      ),
-                      SocialCard(
-                        icon: "assets/icons/twitter.svg",
-                        press: () {},
-                      ),
+                      SocialCard(icon: "assets/google-icon.svg", press: () {}),
+                      SocialCard(icon: "assets/facebook-2.svg", press: () {}),
+                      SocialCard(icon: "assets/icons8-x-50.svg", press: () {}),
                     ],
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'By continuing your confirm that you agree \nwith our Term and Condition',
+                    'By continuing you confirm that you agree \nwith our Term and Condition',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins(),
+                    style: GoogleFonts.poppins(fontSize: 14),
                   ),
                 ],
               ),
