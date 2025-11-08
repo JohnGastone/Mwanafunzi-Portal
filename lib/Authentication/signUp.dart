@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -72,7 +72,7 @@ class _SignUpPageState extends State<SignUpPage> {
               height: 600,
               width: double.maxFinite,
               decoration: BoxDecoration(
-                color: Color.fromRGBO(255, 255, 255, 0.6),
+                color: Colors.white.withOpacity(0.15),
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(30),
                   topLeft: Radius.circular(30),
