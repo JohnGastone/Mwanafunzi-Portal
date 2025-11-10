@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +17,14 @@ class MyApp extends StatelessWidget {
 }
 
 class Student {
-  final String name;
-  final String id;
-  final String photoUrl;
-  final String status;
-  final String program;
-  final String yearLevel;
-  final String gpa;
-  final String enrolledDate;
+  String name;
+  String id;
+  String photoUrl;
+  String status;
+  String program;
+  String yearLevel;
+  String gpa;
+  String enrolledDate;
   bool isChecked;
 
   Student({
@@ -39,19 +41,19 @@ class Student {
 }
 
 class StudentRegistryScreen extends StatefulWidget {
-  const StudentRegistryScreen({Key? key}) : super(key: key);
+  const StudentRegistryScreen({super.key});
 
   @override
   State<StudentRegistryScreen> createState() => _StudentRegistryScreenState();
 }
 
 class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
-  List<Student> students = [
+  final List<Student> students = [
     Student(
       name: 'Lindsay Walton',
       id: 'STU-2023-001',
       photoUrl:
-          'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+          'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
       status: 'Active',
       program: 'Computer Science',
       yearLevel: '3rd Year',
@@ -69,40 +71,9 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
       gpa: '3.5',
       enrolledDate: '03/13/2022',
     ),
-    Student(
-      name: 'Alma Lawson',
-      id: 'STU-2023-003',
-      photoUrl:
-          'https://img.freepik.com/free-photo/female-looking-directly-into-camera_273609-12389.jpg',
-      status: 'Inactive',
-      program: 'Engineering',
-      yearLevel: '1st Year',
-      gpa: '3.2',
-      enrolledDate: '10/02/2023',
-    ),
-    Student(
-      name: 'Floyd Miles',
-      id: 'STU-2023-004',
-      photoUrl:
-          'https://as2.ftcdn.net/v2/jpg/02/24/86/95/1000_F_224869519_aRaeLneqALfPNBzg0xxMZXghtvBXkfIA.jpg',
-      status: 'Active',
-      program: 'Mathematics',
-      yearLevel: '4th Year',
-      gpa: '3.9',
-      enrolledDate: '06/12/2020',
-    ),
-    Student(
-      name: 'Georgia Young',
-      id: 'STU-2023-005',
-      photoUrl:
-          'https://img.freepik.com/free-photo/pretty-smiling-joyfully-female-with-fair-hair-dressed-casually-looking-with-satisfaction_176420-15187.jpg',
-      status: 'Suspended',
-      program: 'Psychology',
-      yearLevel: '2nd Year',
-      gpa: '2.8',
-      enrolledDate: '09/29/2022',
-    ),
   ];
+
+  // ──────────────────────────── VIEW DIALOG ─────────────────────────────
 
   void _showStudentDetails(Student student) {
     showDialog(
@@ -125,33 +96,41 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF111827),
                   ),
                 ),
               ),
             ],
           ),
-          content: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Divider(),
-                Text('Student ID: ${student.id}'),
-                Text('Status: ${student.status}'),
-                Text('Program: ${student.program}'),
-                Text('Year Level: ${student.yearLevel}'),
-                Text('GPA: ${student.gpa}'),
-                Text('Enrolled Date: ${student.enrolledDate}'),
-              ],
-            ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Divider(),
+              Text('Student ID: ${student.id}'),
+              Text('Status: ${student.status}'),
+              Text('Program: ${student.program}'),
+              Text('Year Level: ${student.yearLevel}'),
+              Text('GPA: ${student.gpa}'),
+              Text('Enrolled Date: ${student.enrolledDate}'),
+            ],
           ),
           actions: [
             TextButton(
+              onPressed: () => Navigator.pop(context),
               child: const Text(
                 'Close',
                 style: TextStyle(color: Colors.indigo),
               ),
-              onPressed: () => Navigator.of(context).pop(),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                _showEditForm(student);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF6366F1),
+              ),
+              child: const Text('Edit'),
             ),
           ],
         );
@@ -159,44 +138,251 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
     );
   }
 
-  Color _getStatusColor(String status) {
-    switch (status) {
-      case 'Active':
-        return const Color(0xFF15803D);
-      case 'Inactive':
-        return const Color(0xFF8A551C);
-      case 'Suspended':
-        return const Color(0xFFB91C1C);
-      default:
-        return const Color(0xFF15803D);
+  // ──────────────────────────── EDIT FORM ─────────────────────────────
+
+  void _showEditForm(Student student) {
+    final formKey = GlobalKey<FormState>();
+    final nameController = TextEditingController(text: student.name);
+    final idController = TextEditingController(text: student.id);
+    final gpaController = TextEditingController(text: student.gpa);
+    File? selectedImage;
+    String? selectedStatus = student.status;
+    String? selectedProgram = student.program;
+    String? selectedYearLevel = student.yearLevel;
+    DateTime enrolledDate = _parseDate(student.enrolledDate);
+
+    final List<String> statusOptions = ['Active', 'Inactive', 'Suspended'];
+    final List<String> programOptions = [
+      'Computer Science',
+      'Business Administration',
+      'Engineering',
+      'Mathematics',
+      'Psychology',
+    ];
+    final List<String> yearLevels = [
+      '1st Year',
+      '2nd Year',
+      '3rd Year',
+      '4th Year',
+    ];
+
+    Future<void> pickImage() async {
+      final picker = ImagePicker();
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        setState(() => selectedImage = File(pickedFile.path));
+      }
+    }
+
+    Future<void> selectDate(BuildContext context) async {
+      final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: enrolledDate,
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2101),
+      );
+      if (picked != null) {
+        setState(() => enrolledDate = picked);
+      }
+    }
+
+    void submitForm() {
+      if (formKey.currentState!.validate()) {
+        setState(() {
+          student.name = nameController.text;
+          student.id = idController.text;
+          student.gpa = gpaController.text;
+          student.status = selectedStatus!;
+          student.program = selectedProgram!;
+          student.yearLevel = selectedYearLevel!;
+          student.enrolledDate =
+              "${enrolledDate.month}/${enrolledDate.day}/${enrolledDate.year}";
+          if (selectedImage != null) {
+            student.photoUrl = selectedImage!.path;
+          }
+        });
+        Navigator.pop(context);
+      }
+    }
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              scrollable: true,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              title: const Text('Edit Student'),
+              content: Form(
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Student Photo',
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(height: 12),
+                    Center(
+                      child: GestureDetector(
+                        onTap: pickImage,
+                        child: Container(
+                          width: 120,
+                          height: 120,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF9FAFB),
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: const Color(0xFFE5E7EB),
+                              width: 2,
+                            ),
+                          ),
+                          child:
+                              selectedImage != null
+                                  ? ClipOval(
+                                    child: Image.file(
+                                      selectedImage!,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )
+                                  : CircleAvatar(
+                                    backgroundImage: NetworkImage(
+                                      student.photoUrl,
+                                    ),
+                                    radius: 60,
+                                  ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    const Text('Full Name'),
+                    TextFormField(
+                      controller: nameController,
+                      validator: (v) => v!.isEmpty ? 'Enter full name' : null,
+                    ),
+                    const SizedBox(height: 12),
+                    const Text('Student ID'),
+                    TextFormField(
+                      controller: idController,
+                      validator: (v) => v!.isEmpty ? 'Enter student ID' : null,
+                    ),
+                    const SizedBox(height: 12),
+                    const Text('Status'),
+                    DropdownButtonFormField<String>(
+                      value: selectedStatus,
+                      onChanged: (v) => setState(() => selectedStatus = v),
+                      items:
+                          statusOptions
+                              .map(
+                                (v) =>
+                                    DropdownMenuItem(value: v, child: Text(v)),
+                              )
+                              .toList(),
+                    ),
+                    const SizedBox(height: 12),
+                    const Text('Program'),
+                    DropdownButtonFormField<String>(
+                      value: selectedProgram,
+                      onChanged: (v) => setState(() => selectedProgram = v),
+                      items:
+                          programOptions
+                              .map(
+                                (v) =>
+                                    DropdownMenuItem(value: v, child: Text(v)),
+                              )
+                              .toList(),
+                    ),
+                    const SizedBox(height: 12),
+                    const Text('Year Level'),
+                    DropdownButtonFormField<String>(
+                      value: selectedYearLevel,
+                      onChanged: (v) => setState(() => selectedYearLevel = v),
+                      items:
+                          yearLevels
+                              .map(
+                                (v) =>
+                                    DropdownMenuItem(value: v, child: Text(v)),
+                              )
+                              .toList(),
+                    ),
+                    const SizedBox(height: 12),
+                    const Text('GPA'),
+                    TextFormField(
+                      controller: gpaController,
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      validator: (v) {
+                        final g = double.tryParse(v ?? '');
+                        if (g == null || g < 0 || g > 4) {
+                          return 'Enter valid GPA (0.0 - 4.0)';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 12),
+                    const Text('Enrolled Date'),
+                    InkWell(
+                      onTap: () => selectDate(context),
+                      child: Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF9FAFB),
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: const Color(0xFFE5E7EB)),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "${enrolledDate.month}/${enrolledDate.day}/${enrolledDate.year}",
+                            ),
+                            const Icon(Icons.calendar_today, size: 18),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                OutlinedButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Cancel'),
+                ),
+                ElevatedButton(
+                  onPressed: submitForm,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF6366F1),
+                    foregroundColor: Colors.white,
+                  ),
+                  child: const Text('Save Changes'),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  DateTime _parseDate(String dateStr) {
+    try {
+      final parts = dateStr.split('/');
+      return DateTime(
+        int.parse(parts[2]),
+        int.parse(parts[0]),
+        int.parse(parts[1]),
+      );
+    } catch (_) {
+      return DateTime.now();
     }
   }
 
-  Color _getStatusBackgroundColor(String status) {
-    switch (status) {
-      case 'Active':
-        return const Color(0xFFDCFCE7);
-      case 'Inactive':
-        return const Color(0xFFFEFCE8);
-      case 'Suspended':
-        return const Color(0xFFFEF2F2);
-      default:
-        return const Color(0xFFDCFCE7);
-    }
-  }
-
-  Color _getStatusBorderColor(String status) {
-    switch (status) {
-      case 'Active':
-        return const Color(0xFF15803D);
-      case 'Inactive':
-        return const Color(0xFFF4E7C5);
-      case 'Suspended':
-        return const Color(0xFFFBE0E0);
-      default:
-        return const Color(0xFF15803D);
-    }
-  }
+  // ──────────────────────────── MAIN UI ─────────────────────────────
 
   @override
   Widget build(BuildContext context) {
@@ -206,105 +392,52 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
         child: Column(
           children: [
             Container(
-              width: double.infinity,
               padding: const EdgeInsets.all(24),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                border: Border(
-                  bottom: BorderSide(color: Color(0xFFE5E7EB), width: 1),
-                ),
-              ),
+              color: Colors.white,
               child: const Text(
                 'Student Registry',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
             ),
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(20),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: const Color(0xFFE5E7EB)),
-                  ),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: DataTable(
-                      headingRowColor: MaterialStateProperty.all(
-                        const Color(0xFFF9FAFB),
-                      ),
-                      columns: const [
-                        DataColumn(label: Text('Student')),
-                        DataColumn(label: Text('Status')),
-                        DataColumn(label: Text('Program')),
-                        DataColumn(label: Text('Year Level')),
-                        DataColumn(label: Text('GPA')),
-                        DataColumn(label: Text('Enrolled Date')),
-                        DataColumn(label: Text('Actions')),
-                      ],
-                      rows:
-                          students.map((student) {
-                            return DataRow(
+                padding: const EdgeInsets.all(16),
+                child: DataTable(
+                  columns: const [
+                    // DataColumn(label: Text('Photo')),
+                    DataColumn(label: Text('Name')),
+                    DataColumn(label: Text('Student ID')),
+                    DataColumn(label: Text('Status')),
+                    DataColumn(label: Text('Program')),
+                    DataColumn(label: Text('Year Level')),
+                    DataColumn(label: Text('GPA')),
+                    DataColumn(label: Text('Actions')),
+                  ],
+                  rows:
+                      students
+                          .map(
+                            (s) => DataRow(
                               cells: [
-                                DataCell(
-                                  Row(
-                                    children: [
-                                      Checkbox(
-                                        value: student.isChecked,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            student.isChecked = value ?? false;
-                                          });
-                                        },
-                                      ),
-                                      const SizedBox(width: 8),
-                                      CircleAvatar(
-                                        radius: 24,
-                                        backgroundImage: NetworkImage(
-                                          student.photoUrl,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(student.name),
-                                          Text(
-                                            'ID: ${student.id}',
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                DataCell(Text(student.status)),
-                                DataCell(Text(student.program)),
-                                DataCell(Text(student.yearLevel)),
-                                DataCell(Text(student.gpa)),
-                                DataCell(Text(student.enrolledDate)),
+                                // DataCell(Text(s.)),
+                                DataCell(Text(s.name)),
+                                DataCell(Text(s.id)),
+                                DataCell(Text(s.status)),
+                                DataCell(Text(s.program)),
+                                DataCell(Text(s.yearLevel)),
+                                DataCell(Text(s.gpa)),
                                 DataCell(
                                   ElevatedButton(
-                                    onPressed:
-                                        () => _showStudentDetails(student),
+                                    onPressed: () => _showStudentDetails(s),
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: const Color(0xFF6366F1),
                                     ),
-                                    child: Text(
-                                      'View',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
+                                    child: const Text('View'),
                                   ),
                                 ),
                               ],
-                            );
-                          }).toList(),
-                    ),
-                  ),
+                            ),
+                          )
+                          .toList(),
                 ),
               ),
             ),
