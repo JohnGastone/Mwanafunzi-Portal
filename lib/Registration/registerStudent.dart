@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:mwanafunziportal/Registration/registeredStudents.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
 }
 
 class RegisterStudentScreen extends StatefulWidget {
-  const RegisterStudentScreen({Key? key}) : super(key: key);
+  const RegisterStudentScreen({super.key});
 
   @override
   State<RegisterStudentScreen> createState() => _RegisterStudentScreenState();
@@ -668,7 +669,13 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                             Expanded(
                               child: OutlinedButton(
                                 onPressed: () {
-                                  Navigator.of(context).pop();
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder:
+                                          (context) =>
+                                              const StudentRegistryScreen(),
+                                    ),
+                                  );
                                 },
                                 style: OutlinedButton.styleFrom(
                                   padding: const EdgeInsets.symmetric(

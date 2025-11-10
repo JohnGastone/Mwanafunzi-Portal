@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -108,6 +104,61 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
     ),
   ];
 
+  void _showStudentDetails(Student student) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          title: Row(
+            children: [
+              CircleAvatar(
+                radius: 30,
+                backgroundImage: NetworkImage(student.photoUrl),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  student.name,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF111827),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Divider(),
+                Text('Student ID: ${student.id}'),
+                Text('Status: ${student.status}'),
+                Text('Program: ${student.program}'),
+                Text('Year Level: ${student.yearLevel}'),
+                Text('GPA: ${student.gpa}'),
+                Text('Enrolled Date: ${student.enrolledDate}'),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              child: const Text(
+                'Close',
+                style: TextStyle(color: Colors.indigo),
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Color _getStatusColor(String status) {
     switch (status) {
       case 'Active':
@@ -154,7 +205,6 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // Header
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(24),
@@ -164,26 +214,11 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                   bottom: BorderSide(color: Color(0xFFE5E7EB), width: 1),
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Student Registry',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF111827),
-                    ),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    'Manage and view all registered students',
-                    style: TextStyle(fontSize: 14, color: Color(0xFF6B7280)),
-                  ),
-                ],
+              child: const Text(
+                'Student Registry',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
               ),
             ),
-            // Table
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(20),
@@ -192,13 +227,6 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: const Color(0xFFE5E7EB)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 3,
-                        offset: const Offset(0, 1),
-                      ),
-                    ],
                   ),
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
@@ -206,90 +234,19 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                       headingRowColor: MaterialStateProperty.all(
                         const Color(0xFFF9FAFB),
                       ),
-                      dividerThickness: 1,
-                      border: TableBorder(
-                        horizontalInside: BorderSide(
-                          color: const Color(0xFFE5E7EB),
-                          width: 1,
-                        ),
-                      ),
                       columns: const [
-                        DataColumn(
-                          label: Text(
-                            'Student',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xFF374151),
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            'Status',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xFF374151),
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            'Program',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xFF374151),
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            'Year Level',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xFF374151),
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            'GPA',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xFF374151),
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            'Enrolled Date',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xFF374151),
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            'Actions',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xFF374151),
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
+                        DataColumn(label: Text('Student')),
+                        DataColumn(label: Text('Status')),
+                        DataColumn(label: Text('Program')),
+                        DataColumn(label: Text('Year Level')),
+                        DataColumn(label: Text('GPA')),
+                        DataColumn(label: Text('Enrolled Date')),
+                        DataColumn(label: Text('Actions')),
                       ],
                       rows:
                           students.map((student) {
                             return DataRow(
                               cells: [
-                                // Student Info
                                 DataCell(
                                   Row(
                                     children: [
@@ -300,12 +257,6 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                                             student.isChecked = value ?? false;
                                           });
                                         },
-                                        activeColor: const Color(0xFF15803D),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            4,
-                                          ),
-                                        ),
                                       ),
                                       const SizedBox(width: 8),
                                       CircleAvatar(
@@ -314,27 +265,16 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                                           student.photoUrl,
                                         ),
                                       ),
-                                      const SizedBox(width: 12),
+                                      const SizedBox(width: 8),
                                       Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
                                         children: [
-                                          Text(
-                                            student.name,
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                              color: Color(0xFF111827),
-                                            ),
-                                          ),
-                                          const SizedBox(height: 2),
+                                          Text(student.name),
                                           Text(
                                             'ID: ${student.id}',
                                             style: const TextStyle(
                                               fontSize: 12,
-                                              color: Color(0xFF4B5563),
                                             ),
                                           ),
                                         ],
@@ -342,109 +282,19 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                                     ],
                                   ),
                                 ),
-                                // Status
-                                DataCell(
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 4,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: _getStatusBackgroundColor(
-                                        student.status,
-                                      ),
-                                      borderRadius: BorderRadius.circular(6),
-                                      border: Border.all(
-                                        color: _getStatusBorderColor(
-                                          student.status,
-                                        ),
-                                        width: 1,
-                                      ),
-                                    ),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Container(
-                                          width: 4,
-                                          height: 4,
-                                          decoration: BoxDecoration(
-                                            color: _getStatusColor(
-                                              student.status,
-                                            ),
-                                            shape: BoxShape.circle,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 8),
-                                        Text(
-                                          student.status,
-                                          style: TextStyle(
-                                            color: _getStatusColor(
-                                              student.status,
-                                            ),
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                // Program
-                                DataCell(
-                                  Text(
-                                    student.program,
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                ),
-                                // Year Level
-                                DataCell(
-                                  Text(
-                                    student.yearLevel,
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                ),
-                                // GPA
-                                DataCell(
-                                  Text(
-                                    student.gpa,
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                                // Enrolled Date
-                                DataCell(
-                                  Text(
-                                    student.enrolledDate,
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                ),
-                                // Actions
+                                DataCell(Text(student.status)),
+                                DataCell(Text(student.program)),
+                                DataCell(Text(student.yearLevel)),
+                                DataCell(Text(student.gpa)),
+                                DataCell(Text(student.enrolledDate)),
                                 DataCell(
                                   ElevatedButton(
-                                    onPressed: () {
-                                      // Handle view action
-                                    },
+                                    onPressed:
+                                        () => _showStudentDetails(student),
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: const Color(0xFF6366F1),
-                                      foregroundColor: Colors.white,
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 12,
-                                        vertical: 8,
-                                      ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(6),
-                                      ),
-                                      elevation: 0,
                                     ),
-                                    child: const Text(
-                                      'View',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
+                                    child: const Text('View'),
                                   ),
                                 ),
                               ],
