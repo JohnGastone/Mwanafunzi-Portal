@@ -294,7 +294,10 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: const Color(0xFF6366F1),
                                     ),
-                                    child: const Text('View'),
+                                    child: Text(
+                                      'View',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
                                   ),
                                 ),
                               ],
