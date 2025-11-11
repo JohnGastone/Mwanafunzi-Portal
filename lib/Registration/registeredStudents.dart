@@ -117,7 +117,7 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
               Expanded(
                 child: Text(
                   student.name,
-                  style: const TextStyle(
+                  style: GoogleFonts.poppins(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                   ),
@@ -130,31 +130,63 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Divider(),
-              Text('Student ID: ${student.id}'),
-              Text('Status: ${student.status}'),
-              Text('Program: ${student.program}'),
-              Text('Year Level: ${student.yearLevel}'),
-              Text('GPA: ${student.gpa}'),
-              Text('Enrolled Date: ${student.enrolledDate}'),
+              Text(
+                'Student ID: ${student.id}',
+                style: GoogleFonts.poppins(fontSize: 18),
+              ),
+              Text(
+                'Status: ${student.status}',
+                style: GoogleFonts.poppins(fontSize: 18),
+              ),
+              Text(
+                'Program: ${student.program}',
+                style: GoogleFonts.poppins(fontSize: 18),
+              ),
+              Text(
+                'Year Level: ${student.yearLevel}',
+                style: GoogleFonts.poppins(fontSize: 18),
+              ),
+              Text(
+                'GPA: ${student.gpa}',
+                style: GoogleFonts.poppins(fontSize: 18),
+              ),
+              Text(
+                'Enrolled Date: ${student.enrolledDate}',
+                style: GoogleFonts.poppins(fontSize: 18),
+              ),
             ],
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text(
+              child: Text(
                 'Close',
-                style: TextStyle(color: Colors.indigo),
+                style: GoogleFonts.poppins(color: Colors.indigo),
               ),
             ),
-            ElevatedButton(
-              onPressed: () {
+
+            InkWell(
+              onTap: () {
                 Navigator.pop(context);
                 _showEditForm(student);
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF6366F1),
+              child: Container(
+                width: 60,
+                height: 30,
+                decoration: BoxDecoration(
+                  color: Colors.lightBlue,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Center(
+                  child: Text(
+                    'Edit',
+                    style: GoogleFonts.poppins(
+                      fontSize: 13,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
               ),
-              child: const Text('Edit'),
             ),
           ],
         );
@@ -179,8 +211,8 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
     final List<String> programOptions = [
       'Computer Science',
       'Business Administration',
-      'Engineering',
-      'Mathematics',
+      'Water Engineering',
+      'Forensic Science',
       'Psychology',
     ];
     final List<String> yearLevels = [
@@ -239,15 +271,15 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),
-              title: const Text('Edit Student'),
+              title: Text('Edit Student'),
               content: Form(
                 key: formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Student Photo',
-                      style: TextStyle(fontWeight: FontWeight.w600),
+                      style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(height: 12),
                     Center(
@@ -282,19 +314,19 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    const Text('Full Name'),
+                    Text('Full Name', style: GoogleFonts.poppins()),
                     TextFormField(
                       controller: nameController,
                       validator: (v) => v!.isEmpty ? 'Enter full name' : null,
                     ),
                     const SizedBox(height: 12),
-                    const Text('Student ID'),
+                    Text('Student ID', style: GoogleFonts.poppins()),
                     TextFormField(
                       controller: idController,
                       validator: (v) => v!.isEmpty ? 'Enter student ID' : null,
                     ),
                     const SizedBox(height: 12),
-                    const Text('Status'),
+                    Text('Status', style: GoogleFonts.poppins()),
                     DropdownButtonFormField<String>(
                       value: selectedStatus,
                       onChanged: (v) => setState(() => selectedStatus = v),
@@ -307,7 +339,7 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                               .toList(),
                     ),
                     const SizedBox(height: 12),
-                    const Text('Program'),
+                    Text('Program', style: GoogleFonts.poppins()),
                     DropdownButtonFormField<String>(
                       value: selectedProgram,
                       onChanged: (v) => setState(() => selectedProgram = v),
@@ -320,7 +352,7 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                               .toList(),
                     ),
                     const SizedBox(height: 12),
-                    const Text('Year Level'),
+                    Text('Year Level', style: GoogleFonts.poppins()),
                     DropdownButtonFormField<String>(
                       value: selectedYearLevel,
                       onChanged: (v) => setState(() => selectedYearLevel = v),
@@ -333,7 +365,7 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                               .toList(),
                     ),
                     const SizedBox(height: 12),
-                    const Text('GPA'),
+                    Text('GPA', style: GoogleFonts.poppins()),
                     TextFormField(
                       controller: gpaController,
                       keyboardType: const TextInputType.numberWithOptions(
@@ -348,7 +380,7 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                       },
                     ),
                     const SizedBox(height: 12),
-                    const Text('Enrolled Date'),
+                    Text('Enrolled Date', style: GoogleFonts.poppins()),
                     InkWell(
                       onTap: () => selectDate(context),
                       child: Container(
@@ -375,7 +407,7 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
               actions: [
                 OutlinedButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel'),
+                  child: Text('Cancel'),
                 ),
                 ElevatedButton(
                   onPressed: submitForm,
@@ -429,15 +461,29 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
                 child: DataTable(
-                  columns: const [
+                  columns: [
                     // DataColumn(label: Text('Photo')),
-                    DataColumn(label: Text('Name')),
-                    DataColumn(label: Text('Student ID')),
-                    DataColumn(label: Text('Status')),
-                    DataColumn(label: Text('Program')),
-                    DataColumn(label: Text('Year Level')),
-                    DataColumn(label: Text('GPA')),
-                    DataColumn(label: Text('Actions')),
+                    DataColumn(
+                      label: Text('Name', style: GoogleFonts.poppins()),
+                    ),
+                    DataColumn(
+                      label: Text('Student ID', style: GoogleFonts.poppins()),
+                    ),
+                    DataColumn(
+                      label: Text('Status', style: GoogleFonts.poppins()),
+                    ),
+                    DataColumn(
+                      label: Text('Program', style: GoogleFonts.poppins()),
+                    ),
+                    DataColumn(
+                      label: Text('Year Level', style: GoogleFonts.poppins()),
+                    ),
+                    DataColumn(
+                      label: Text('GPA', style: GoogleFonts.poppins()),
+                    ),
+                    DataColumn(
+                      label: Text('Actions', style: GoogleFonts.poppins()),
+                    ),
                   ],
                   rows:
                       students
@@ -445,12 +491,27 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                             (s) => DataRow(
                               cells: [
                                 // DataCell(Text(s.)),
-                                DataCell(Text(s.name)),
-                                DataCell(Text(s.id)),
-                                DataCell(Text(s.status)),
-                                DataCell(Text(s.program)),
-                                DataCell(Text(s.yearLevel)),
-                                DataCell(Text(s.gpa)),
+                                DataCell(
+                                  Text(s.name, style: GoogleFonts.poppins()),
+                                ),
+                                DataCell(
+                                  Text(s.id, style: GoogleFonts.poppins()),
+                                ),
+                                DataCell(
+                                  Text(s.status, style: GoogleFonts.poppins()),
+                                ),
+                                DataCell(
+                                  Text(s.program, style: GoogleFonts.poppins()),
+                                ),
+                                DataCell(
+                                  Text(
+                                    s.yearLevel,
+                                    style: GoogleFonts.poppins(),
+                                  ),
+                                ),
+                                DataCell(
+                                  Text(s.gpa, style: GoogleFonts.poppins()),
+                                ),
                                 DataCell(
                                   InkWell(
                                     onTap: () => _showStudentDetails(s),

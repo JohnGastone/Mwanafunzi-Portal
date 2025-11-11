@@ -1,6 +1,7 @@
 // ignore_for_file: unused_element
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:mwanafunziportal/Registration/registeredStudents.dart';
@@ -141,9 +142,9 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
       // Handle form submission
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text(
+          content: Text(
             'Student registered successfully!',
-            style: TextStyle(fontWeight: FontWeight.w500),
+            style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
           ),
           backgroundColor: const Color(0xFF15803D),
           behavior: SnackBarBehavior.floating,
@@ -203,10 +204,10 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                   const SizedBox(width: 12),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text(
                         'Register New Student',
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           fontSize: 24,
                           fontWeight: FontWeight.w600,
                           color: Color(0xFF111827),
@@ -215,7 +216,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                       SizedBox(height: 4),
                       Text(
                         'Fill in the student information below',
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           fontSize: 14,
                           color: Color(0xFF6B7280),
                         ),
@@ -249,9 +250,9 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Photo Upload
-                        const Text(
+                        Text(
                           'Student Photo',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                             color: Color(0xFF374151),
@@ -292,9 +293,9 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                         Center(
                           child: TextButton(
                             onPressed: _pickImage,
-                            child: const Text(
+                            child: Text(
                               'Upload Photo',
-                              style: TextStyle(
+                              style: GoogleFonts.poppins(
                                 color: Color(0xFF6366F1),
                                 fontWeight: FontWeight.w500,
                               ),
@@ -304,9 +305,9 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                         const SizedBox(height: 24),
 
                         // Student Name
-                        const Text(
+                        Text(
                           'Full Name',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                             color: Color(0xFF374151),
@@ -317,7 +318,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                           controller: _nameController,
                           decoration: InputDecoration(
                             hintText: 'Enter student full name',
-                            hintStyle: const TextStyle(
+                            hintStyle: GoogleFonts.poppins(
                               color: Color(0xFF9CA3AF),
                             ),
                             filled: true,
@@ -356,9 +357,9 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                         const SizedBox(height: 20),
 
                         // Student ID
-                        const Text(
+                        Text(
                           'Student ID',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                             color: Color(0xFF374151),
@@ -369,7 +370,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                           controller: _studentIdController,
                           decoration: InputDecoration(
                             hintText: 'e.g., STU-2023-006',
-                            hintStyle: const TextStyle(
+                            hintStyle: GoogleFonts.poppins(
                               color: Color(0xFF9CA3AF),
                             ),
                             filled: true,
@@ -408,9 +409,9 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                         const SizedBox(height: 20),
 
                         // Status Dropdown
-                        const Text(
+                        Text(
                           'Status',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                             color: Color(0xFF374151),
@@ -432,10 +433,9 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                                 Icons.keyboard_arrow_down,
                                 color: Color(0xFF6B7280),
                               ),
-                              style: const TextStyle(
+                              style: GoogleFonts.poppins(
                                 fontSize: 14,
                                 color: Color(0xFF111827),
-                                fontFamily: 'Poppins',
                               ),
                               items:
                                   _statusOptions.map((String value) {
@@ -468,9 +468,9 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                         const SizedBox(height: 20),
 
                         // Program Dropdown
-                        const Text(
+                        Text(
                           'Program',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                             color: Color(0xFF374151),
@@ -492,10 +492,9 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                                 Icons.keyboard_arrow_down,
                                 color: Color(0xFF6B7280),
                               ),
-                              style: const TextStyle(
+                              style: GoogleFonts.poppins(
                                 fontSize: 14,
                                 color: Color(0xFF111827),
-                                fontFamily: 'Poppins',
                               ),
                               items:
                                   _programOptions.map((String value) {
@@ -515,9 +514,9 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                         const SizedBox(height: 20),
 
                         // Year Level Dropdown
-                        const Text(
+                        Text(
                           'Year Level',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                             color: Color(0xFF374151),
@@ -539,10 +538,9 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                                 Icons.keyboard_arrow_down,
                                 color: Color(0xFF6B7280),
                               ),
-                              style: const TextStyle(
+                              style: GoogleFonts.poppins(
                                 fontSize: 14,
                                 color: Color(0xFF111827),
-                                fontFamily: 'Poppins',
                               ),
                               items:
                                   _yearLevelOptions.map((String value) {
@@ -562,9 +560,9 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                         const SizedBox(height: 20),
 
                         // GPA
-                        const Text(
+                        Text(
                           'GPA',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                             color: Color(0xFF374151),
@@ -578,7 +576,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                           ),
                           decoration: InputDecoration(
                             hintText: 'e.g., 3.8',
-                            hintStyle: const TextStyle(
+                            hintStyle: GoogleFonts.poppins(
                               color: Color(0xFF9CA3AF),
                             ),
                             filled: true,
@@ -621,9 +619,9 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                         const SizedBox(height: 20),
 
                         // Enrolled Date
-                        const Text(
+                        Text(
                           'Enrolled Date',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                             color: Color(0xFF374151),
@@ -649,7 +647,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                               children: [
                                 Text(
                                   '${_enrolledDate.month}/${_enrolledDate.day}/${_enrolledDate.year}',
-                                  style: const TextStyle(
+                                  style: GoogleFonts.poppins(
                                     fontSize: 14,
                                     color: Color(0xFF111827),
                                   ),
@@ -690,9 +688,9 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                 ),
-                                child: const Text(
+                                child: Text(
                                   'Cancel',
-                                  style: TextStyle(
+                                  style: GoogleFonts.poppins(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
                                     color: Color(0xFF374151),
@@ -715,9 +713,9 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                                   ),
                                   elevation: 0,
                                 ),
-                                child: const Text(
+                                child: Text(
                                   'Register Student',
-                                  style: TextStyle(
+                                  style: GoogleFonts.poppins(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
                                   ),
