@@ -500,6 +500,14 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                         DataColumn(
                           label: Expanded(
                             child: Text(
+                              'Enrolled Date',
+                              style: GoogleFonts.poppins(),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Expanded(
+                            child: Text(
                               'Program',
                               style: GoogleFonts.poppins(),
                             ),
@@ -559,6 +567,12 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                                     DataCell(
                                       Text(
                                         s.status,
+                                        style: GoogleFonts.poppins(),
+                                      ),
+                                    ),
+                                    DataCell(
+                                      Text(
+                                        s.enrolledDate,
                                         style: GoogleFonts.poppins(),
                                       ),
                                     ),
