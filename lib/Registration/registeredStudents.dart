@@ -457,111 +457,190 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                 ),
               ),
             ),
-            Expanded(
+            Flexible(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
-                child: DataTable(
-                  columns: [
-                    // DataColumn(label: Text('Photo')),
-                    DataColumn(
-                      label: Text('Name', style: GoogleFonts.poppins()),
+                scrollDirection: Axis.vertical,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minWidth: MediaQuery.of(context).size.width - 32,
                     ),
-                    DataColumn(
-                      label: Text('Student ID', style: GoogleFonts.poppins()),
-                    ),
-                    DataColumn(
-                      label: Text('Status', style: GoogleFonts.poppins()),
-                    ),
-                    DataColumn(
-                      label: Text('Program', style: GoogleFonts.poppins()),
-                    ),
-                    DataColumn(
-                      label: Text('Year Level', style: GoogleFonts.poppins()),
-                    ),
-                    DataColumn(
-                      label: Text('GPA', style: GoogleFonts.poppins()),
-                    ),
-                    DataColumn(
-                      label: Text('Actions', style: GoogleFonts.poppins()),
-                    ),
-                  ],
-                  rows:
-                      students
-                          .map(
-                            (s) => DataRow(
-                              cells: [
-                                // DataCell(Text(s.)),
-                                DataCell(
-                                  Text(s.name, style: GoogleFonts.poppins()),
-                                ),
-                                DataCell(
-                                  Text(s.id, style: GoogleFonts.poppins()),
-                                ),
-                                DataCell(
-                                  Text(s.status, style: GoogleFonts.poppins()),
-                                ),
-                                DataCell(
-                                  Text(s.program, style: GoogleFonts.poppins()),
-                                ),
-                                DataCell(
-                                  Text(
-                                    s.yearLevel,
-                                    style: GoogleFonts.poppins(),
-                                  ),
-                                ),
-                                DataCell(
-                                  Text(s.gpa, style: GoogleFonts.poppins()),
-                                ),
-                                DataCell(
-                                  InkWell(
-                                    onTap: () => _showStudentDetails(s),
-                                    child: Container(
-                                      width: 60,
-                                      height: 30,
-                                      decoration: BoxDecoration(
-                                        color: Colors.lightBlue,
-                                        borderRadius: BorderRadius.circular(15),
+                    child: DataTable(
+                      columnSpacing: 20,
+                      horizontalMargin: 12,
+                      dataRowMinHeight: 48,
+                      dataRowMaxHeight:
+                          double.infinity, // Allows rows to expand
+                      columns: [
+                        DataColumn(
+                          label: Expanded(
+                            child: Text('Photo', style: GoogleFonts.poppins()),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Expanded(
+                            child: Text('Name', style: GoogleFonts.poppins()),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Expanded(
+                            child: Text(
+                              'Student ID',
+                              style: GoogleFonts.poppins(),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Expanded(
+                            child: Text('Status', style: GoogleFonts.poppins()),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Expanded(
+                            child: Text(
+                              'Program',
+                              style: GoogleFonts.poppins(),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Expanded(
+                            child: Text(
+                              'Year Level',
+                              style: GoogleFonts.poppins(),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Expanded(
+                            child: Text('GPA', style: GoogleFonts.poppins()),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Expanded(
+                            child: Text(
+                              'Actions',
+                              style: GoogleFonts.poppins(),
+                            ),
+                          ),
+                        ),
+                      ],
+                      rows:
+                          students
+                              .map(
+                                (s) => DataRow(
+                                  cells: [
+                                    DataCell(
+                                      CircleAvatar(
+                                        radius: 20,
+                                        backgroundImage: NetworkImage(
+                                          s.photoUrl,
+                                        ),
                                       ),
-                                      child: Center(
+                                    ),
+                                    DataCell(
+                                      Container(
+                                        constraints: BoxConstraints(
+                                          maxWidth: 150,
+                                        ),
                                         child: Text(
-                                          'View',
-                                          style: GoogleFonts.poppins(
-                                            fontSize: 13,
-                                            color: Colors.white,
+                                          s.name,
+                                          style: GoogleFonts.poppins(),
+                                          overflow: TextOverflow.visible,
+                                          softWrap: true,
+                                        ),
+                                      ),
+                                    ),
+                                    DataCell(
+                                      Text(s.id, style: GoogleFonts.poppins()),
+                                    ),
+                                    DataCell(
+                                      Text(
+                                        s.status,
+                                        style: GoogleFonts.poppins(),
+                                      ),
+                                    ),
+                                    DataCell(
+                                      Container(
+                                        constraints: BoxConstraints(
+                                          maxWidth: 200,
+                                        ),
+                                        child: Text(
+                                          s.program,
+                                          style: GoogleFonts.poppins(),
+                                          overflow: TextOverflow.visible,
+                                          softWrap: true,
+                                        ),
+                                      ),
+                                    ),
+                                    DataCell(
+                                      Text(
+                                        s.yearLevel,
+                                        style: GoogleFonts.poppins(),
+                                      ),
+                                    ),
+                                    DataCell(
+                                      Text(s.gpa, style: GoogleFonts.poppins()),
+                                    ),
+                                    DataCell(
+                                      InkWell(
+                                        onTap: () => _showStudentDetails(s),
+                                        child: Container(
+                                          width: 60,
+                                          height: 30,
+                                          decoration: BoxDecoration(
+                                            color: Colors.lightBlue,
+                                            borderRadius: BorderRadius.circular(
+                                              15,
+                                            ),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              'View',
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 13,
+                                                color: Colors.white,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          )
-                          .toList(),
+                              )
+                              .toList(),
+                    ),
+                  ),
                 ),
               ),
             ),
-            InkWell(
-              onTap:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const RegisterStudentScreen(),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: InkWell(
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const RegisterStudentScreen(),
+                      ),
                     ),
+                child: Container(
+                  width: 180,
+                  height: 30,
+                  decoration: BoxDecoration(
+                    color: Colors.lightBlue,
+                    borderRadius: BorderRadius.circular(15),
                   ),
-              child: Container(
-                width: 180,
-                height: 30,
-                decoration: BoxDecoration(
-                  color: Colors.lightBlue,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Center(
-                  child: Text(
-                    'Register New Student',
-                    style: GoogleFonts.poppins(
-                      fontSize: 13,
-                      color: Colors.white,
+                  child: Center(
+                    child: Text(
+                      'Register New Student',
+                      style: GoogleFonts.poppins(
+                        fontSize: 13,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
