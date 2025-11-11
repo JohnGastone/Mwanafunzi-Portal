@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mwanafunziportal/Registration/registerStudent.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -50,30 +52,30 @@ class StudentRegistryScreen extends StatefulWidget {
 class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
   final List<Student> students = [
     Student(
-      name: 'Lindsay Walton',
+      name: 'Atuganile Silimuntu',
       id: 'STU-2023-001',
       photoUrl:
           'https://plus.unsplash.com/premium_photo-1682089892133-556bde898f2c?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c3R1ZGVudCUyMHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=600',
       status: 'Active',
-      program: 'Computer Science',
+      program: 'Water Engineering',
       yearLevel: '3rd Year',
       gpa: '3.8',
       enrolledDate: '09/08/2021',
     ),
     Student(
-      name: 'Marvin McKinney',
-      id: 'STU-2023-002',
+      name: 'Mzimba Chirwa',
+      id: 'STU-2023-003',
       photoUrl:
           'https://t4.ftcdn.net/jpg/02/14/74/61/360_F_214746128_31JkeaP6rU0NzzzdFC4khGkmqc8noe6h.jpg',
       status: 'Active',
-      program: 'Business Administration',
+      program: 'Forensic Science',
       yearLevel: '2nd Year',
       gpa: '3.5',
       enrolledDate: '03/13/2022',
     ),
     Student(
-      name: 'Lindsay Walton',
-      id: 'STU-2023-001',
+      name: 'Ananieli Mosha',
+      id: 'STU-2023-004',
       photoUrl:
           'https://plus.unsplash.com/premium_photo-1682089892133-556bde898f2c?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c3R1ZGVudCUyMHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=600',
       status: 'Active',
@@ -83,7 +85,7 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
       enrolledDate: '09/08/2021',
     ),
     Student(
-      name: 'Marvin McKinney',
+      name: 'Mpoki Mambale',
       id: 'STU-2023-002',
       photoUrl:
           'https://t4.ftcdn.net/jpg/02/14/74/61/360_F_214746128_31JkeaP6rU0NzzzdFC4khGkmqc8noe6h.jpg',
@@ -415,10 +417,12 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
           children: [
             Container(
               padding: const EdgeInsets.all(24),
-              color: Colors.white,
-              child: const Text(
+              child: Text(
                 'Student Registry',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                style: GoogleFonts.poppins(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             Expanded(
@@ -448,18 +452,57 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                                 DataCell(Text(s.yearLevel)),
                                 DataCell(Text(s.gpa)),
                                 DataCell(
-                                  ElevatedButton(
-                                    onPressed: () => _showStudentDetails(s),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xFF6366F1),
+                                  InkWell(
+                                    onTap: () => _showStudentDetails(s),
+                                    child: Container(
+                                      width: 60,
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                        color: Colors.lightBlue,
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          'View',
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 13,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                    child: const Text('View'),
                                   ),
                                 ),
                               ],
                             ),
                           )
                           .toList(),
+                ),
+              ),
+            ),
+            InkWell(
+              onTap:
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const RegisterStudentScreen(),
+                    ),
+                  ),
+              child: Container(
+                width: 180,
+                height: 30,
+                decoration: BoxDecoration(
+                  color: Colors.lightBlue,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Center(
+                  child: Text(
+                    'Register New Student',
+                    style: GoogleFonts.poppins(
+                      fontSize: 13,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
             ),
