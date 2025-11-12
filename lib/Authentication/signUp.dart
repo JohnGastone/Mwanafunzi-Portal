@@ -10,12 +10,11 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+  bool isObscured = true;
+  bool isObscuredSecond = true;
+
   @override
   Widget build(BuildContext context) {
-    bool toggleVisibility = false;
-    bool isObscured = true;
-    bool toggleVisibilitySecond = false;
-    bool isObscuredSecond = true;
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 1024;
     final isTablet = size.width > 600 && size.width <= 1024;
@@ -27,7 +26,6 @@ class _SignupPageState extends State<SignupPage> {
     final inputFontSize = isDesktop ? 18.0 : 15.0;
     final titleFontSize = isDesktop ? 70.0 : (isTablet ? 60.0 : 50.0);
     final subtitlePaddingLeft = isDesktop ? 200.0 : (isTablet ? 150.0 : 105.0);
-    // ignore: unused_local_variable
     final buttonWidth = isDesktop ? 300.0 : (isTablet ? 250.0 : 200.0);
 
     return Scaffold(
@@ -71,7 +69,7 @@ class _SignupPageState extends State<SignupPage> {
               height: isDesktop ? 700 : 600,
               width: double.maxFinite,
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 87, 145, 21),
+                color: Colors.white.withOpacity(0.15),
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(30),
                   topLeft: Radius.circular(30),
@@ -101,7 +99,11 @@ class _SignupPageState extends State<SignupPage> {
                     containerHeight,
                     inputFontSize,
                     isObscured,
-                    toggleVisibility as VoidCallback,
+                    () {
+                      setState(() {
+                        isObscured = !isObscured;
+                      });
+                    },
                   ),
                   SizedBox(height: 30),
                   _buildPasswordContainer(
@@ -110,10 +112,13 @@ class _SignupPageState extends State<SignupPage> {
                     containerHeight,
                     inputFontSize,
                     isObscuredSecond,
-                    toggleVisibilitySecond as VoidCallback,
+                    () {
+                      setState(() {
+                        isObscuredSecond = !isObscuredSecond;
+                      });
+                    },
                   ),
                   SizedBox(height: 20),
-                  // Insert your Create Account button here with responsive width if needed
                   SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.only(left: 50),
@@ -157,7 +162,6 @@ class _SignupPageState extends State<SignupPage> {
     );
   }
 
-  // Helper widget for text input containers
   Widget _buildInputContainer(
     String hint,
     double width,
@@ -187,7 +191,6 @@ class _SignupPageState extends State<SignupPage> {
     );
   }
 
-  // Helper widget for password fields with toggle visibility
   Widget _buildPasswordContainer(
     String hint,
     double width,

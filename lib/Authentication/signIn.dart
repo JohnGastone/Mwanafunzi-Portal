@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mwanafunziportal/Authentication/signUp.dart';
+import 'package:mwanafunziportal/Registration/registeredStudents.dart';
 
 class Loginpage extends StatefulWidget {
   const Loginpage({super.key});
@@ -114,29 +115,31 @@ class _LoginpageState extends State<Loginpage> {
                     ),
                   ),
                   SizedBox(height: 30),
-                  // Container(
-                  //   decoration: BoxDecoration(
-                  //     color: Colors.white24,
-                  //     borderRadius: BorderRadius.circular(16),
-                  //   ),
-                  //   height: 50,
-                  //   width: 170,
-                  //   child: TextButton(
-                  //     child: Text(
-                  //       "Login",
-                  //       style: GoogleFonts.poppins(
-                  //         fontSize: 18,
-                  //         color: Colors.white,
-                  //       ),
-                  //     ),
-                  //     onPressed: () {
-                  //       Navigator.push(
-                  //         // context,
-                  //         // MaterialPageRoute(builder: (context) => MyHomePage()),
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white24,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    height: 50,
+                    width: 170,
+                    child: TextButton(
+                      child: Text(
+                        "Login",
+                        style: GoogleFonts.poppins(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => StudentRegistryScreen(),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                   SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.only(left: 78),
