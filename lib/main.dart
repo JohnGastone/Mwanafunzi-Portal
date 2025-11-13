@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mwanafunziportal/Authentication/signIn.dart';
-import 'package:mwanafunziportal/Authentication/signUp.dart';
-import 'package:mwanafunziportal/Registration/registerStudent.dart';
-import 'package:mwanafunziportal/Registration/registeredStudents.dart';
+import 'package:mwanafunziportal/Providers/student_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => StudentProvider())],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
