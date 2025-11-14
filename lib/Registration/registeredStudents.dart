@@ -316,12 +316,14 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                     const SizedBox(height: 16),
                     Text('Full Name', style: GoogleFonts.poppins()),
                     TextFormField(
+                      style: GoogleFonts.poppins(),
                       controller: nameController,
                       validator: (v) => v!.isEmpty ? 'Enter full name' : null,
                     ),
                     const SizedBox(height: 12),
                     Text('Student ID', style: GoogleFonts.poppins()),
                     TextFormField(
+                      style: GoogleFonts.poppins(),
                       controller: idController,
                       validator: (v) => v!.isEmpty ? 'Enter student ID' : null,
                     ),
@@ -333,8 +335,10 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                       items:
                           statusOptions
                               .map(
-                                (v) =>
-                                    DropdownMenuItem(value: v, child: Text(v)),
+                                (v) => DropdownMenuItem(
+                                  value: v,
+                                  child: Text(v, style: GoogleFonts.poppins()),
+                                ),
                               )
                               .toList(),
                     ),
@@ -346,8 +350,10 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                       items:
                           programOptions
                               .map(
-                                (v) =>
-                                    DropdownMenuItem(value: v, child: Text(v)),
+                                (v) => DropdownMenuItem(
+                                  value: v,
+                                  child: Text(v, style: GoogleFonts.poppins()),
+                                ),
                               )
                               .toList(),
                     ),
@@ -359,14 +365,17 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                       items:
                           yearLevels
                               .map(
-                                (v) =>
-                                    DropdownMenuItem(value: v, child: Text(v)),
+                                (v) => DropdownMenuItem(
+                                  value: v,
+                                  child: Text(v, style: GoogleFonts.poppins()),
+                                ),
                               )
                               .toList(),
                     ),
                     const SizedBox(height: 12),
                     Text('GPA', style: GoogleFonts.poppins()),
                     TextFormField(
+                      style: GoogleFonts.poppins(),
                       controller: gpaController,
                       keyboardType: const TextInputType.numberWithOptions(
                         decimal: true,
@@ -395,6 +404,7 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                           children: [
                             Text(
                               "${enrolledDate.month}/${enrolledDate.day}/${enrolledDate.year}",
+                              style: GoogleFonts.poppins(fontSize: 16),
                             ),
                             const Icon(Icons.calendar_today, size: 18),
                           ],
@@ -407,7 +417,7 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
               actions: [
                 OutlinedButton(
                   onPressed: () => Navigator.pop(context),
-                  child: Text('Cancel'),
+                  child: Text('Cancel', style: GoogleFonts.poppins()),
                 ),
                 ElevatedButton(
                   onPressed: submitForm,
@@ -415,7 +425,7 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                     backgroundColor: const Color(0xFF6366F1),
                     foregroundColor: Colors.white,
                   ),
-                  child: const Text('Save Changes'),
+                  child: Text('Save Changes', style: GoogleFonts.poppins()),
                 ),
               ],
             );
