@@ -541,10 +541,13 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                                 (s) => DataRow(
                                   cells: [
                                     DataCell(
-                                      CircleAvatar(
-                                        radius: 20,
-                                        backgroundImage: NetworkImage(
-                                          s.photoUrl,
+                                      InkWell(
+                                        onTap: () => _showStudentDetails(s),
+                                        child: CircleAvatar(
+                                          radius: 20,
+                                          backgroundImage: NetworkImage(
+                                            s.photoUrl,
+                                          ),
                                         ),
                                       ),
                                     ),
