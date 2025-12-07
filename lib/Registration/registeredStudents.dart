@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Student Registry',
+      title: 'Students Registry Dashboard',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Poppins', primarySwatch: Colors.indigo),
       home: const StudentRegistryScreen(),
@@ -460,7 +460,7 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
             Container(
               padding: const EdgeInsets.all(24),
               child: Text(
-                'Student Registry',
+                'Students Registry Dashboard',
                 style: GoogleFonts.poppins(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
