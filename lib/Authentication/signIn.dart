@@ -47,7 +47,7 @@ class _LoginpageState extends State<Loginpage> {
             Padding(
               padding: const EdgeInsets.only(left: 35, right: 20),
               child: Text(
-                "Please enter your credentials below, there is a dish waiting for you",
+                "Please enter your credentials below, to continue accessing your account.",
                 style: GoogleFonts.poppins(fontSize: 18, color: Colors.white),
               ),
             ),
