@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mwanafunziportal/Models/student.dart';
+import 'package:mwanafunziportal/Registration/editStudentForm.dart';
 
 class ViewStudent {
-  // Make this a static method so it can be called without creating an instance
   static void showStudentDetails(
     BuildContext context,
     Student student, {
-    Function(Student)? onEdit,
+    required Function() onUpdate,
   }) {
     showDialog(
       context: context,
@@ -76,9 +76,7 @@ class ViewStudent {
             InkWell(
               onTap: () {
                 Navigator.pop(context);
-                if (onEdit != null) {
-                  onEdit(student);
-                }
+                EditStudent.showEditForm(context, student, onSave: onUpdate);
               },
               child: Container(
                 width: 60,
