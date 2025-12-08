@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mwanafunziportal/Models/student.dart';
+import 'package:mwanafunziportal/Models/student.dart' show students, Student;
 import 'package:mwanafunziportal/Registration/registerStudent.dart';
 import 'package:mwanafunziportal/Registration/viewStudent.dart';
 
@@ -386,6 +386,7 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                               .map(
                                 (s) => DataRow(
                                   cells: [
+                                    // 1. Photo cell
                                     DataCell(
                                       InkWell(
                                         onTap:
@@ -403,6 +404,7 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                                         ),
                                       ),
                                     ),
+                                    // 2. Name cell
                                     DataCell(
                                       Container(
                                         constraints: BoxConstraints(
@@ -416,21 +418,25 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                                         ),
                                       ),
                                     ),
+                                    // 3. ID cell
                                     DataCell(
                                       Text(s.id, style: GoogleFonts.poppins()),
                                     ),
+                                    // 4. Status cell
                                     DataCell(
                                       Text(
                                         s.status,
                                         style: GoogleFonts.poppins(),
                                       ),
                                     ),
+                                    // 5. Enrolled Date cell
                                     DataCell(
                                       Text(
                                         s.enrolledDate,
                                         style: GoogleFonts.poppins(),
                                       ),
                                     ),
+                                    // 6. Program cell
                                     DataCell(
                                       Container(
                                         constraints: BoxConstraints(
@@ -444,12 +450,18 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                                         ),
                                       ),
                                     ),
+                                    // 7. Year Level cell
                                     DataCell(
                                       Text(
                                         s.yearLevel,
                                         style: GoogleFonts.poppins(),
                                       ),
                                     ),
+                                    // 8. GPA cell
+                                    DataCell(
+                                      Text(s.gpa, style: GoogleFonts.poppins()),
+                                    ),
+                                    // 9. Actions cell - THIS WAS THE PROBLEM!
                                     DataCell(
                                       InkWell(
                                         onTap:
