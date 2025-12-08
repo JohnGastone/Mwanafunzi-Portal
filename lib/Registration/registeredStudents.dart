@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mwanafunziportal/Models/student.dart';
 import 'package:mwanafunziportal/Registration/registerStudent.dart';
 
 class MyApp extends StatelessWidget {
@@ -16,30 +17,6 @@ class MyApp extends StatelessWidget {
       home: const StudentRegistryScreen(),
     );
   }
-}
-
-class Student {
-  String name;
-  String id;
-  String photoUrl;
-  String status;
-  String program;
-  String yearLevel;
-  String gpa;
-  String enrolledDate;
-  bool isChecked;
-
-  Student({
-    required this.name,
-    required this.id,
-    required this.photoUrl,
-    required this.status,
-    required this.program,
-    required this.yearLevel,
-    required this.gpa,
-    required this.enrolledDate,
-    this.isChecked = false,
-  });
 }
 
 class StudentRegistryScreen extends StatefulWidget {
@@ -330,7 +307,7 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                     const SizedBox(height: 12),
                     Text('Status', style: GoogleFonts.poppins()),
                     DropdownButtonFormField<String>(
-                      value: selectedStatus,
+                      initialValue: selectedStatus,
                       onChanged: (v) => setState(() => selectedStatus = v),
                       items:
                           statusOptions
@@ -345,7 +322,7 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                     const SizedBox(height: 12),
                     Text('Program', style: GoogleFonts.poppins()),
                     DropdownButtonFormField<String>(
-                      value: selectedProgram,
+                      initialValue: selectedProgram,
                       onChanged: (v) => setState(() => selectedProgram = v),
                       items:
                           programOptions
@@ -360,7 +337,7 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                     const SizedBox(height: 12),
                     Text('Year Level', style: GoogleFonts.poppins()),
                     DropdownButtonFormField<String>(
-                      value: selectedYearLevel,
+                      initialValue: selectedYearLevel,
                       onChanged: (v) => setState(() => selectedYearLevel = v),
                       items:
                           yearLevels

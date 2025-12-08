@@ -1,7 +1,6 @@
 class Student {
-  final String id;
+  String id;
   String name;
-  String studentId;
   String photoUrl;
   String status;
   String program;
@@ -13,7 +12,6 @@ class Student {
   Student({
     required this.id,
     required this.name,
-    required this.studentId,
     required this.photoUrl,
     required this.status,
     required this.program,
@@ -27,7 +25,6 @@ class Student {
   Student copyWith({
     String? id,
     String? name,
-    String? studentId,
     String? photoUrl,
     String? status,
     String? program,
@@ -39,7 +36,6 @@ class Student {
     return Student(
       id: id ?? this.id,
       name: name ?? this.name,
-      studentId: studentId ?? this.studentId,
       photoUrl: photoUrl ?? this.photoUrl,
       status: status ?? this.status,
       program: program ?? this.program,
