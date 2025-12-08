@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mwanafunziportal/Models/student.dart';
 import 'package:mwanafunziportal/Registration/registerStudent.dart';
+import 'package:mwanafunziportal/Registration/viewStudent.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -27,149 +28,7 @@ class StudentRegistryScreen extends StatefulWidget {
 }
 
 class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
-  final List<Student> students = [
-    Student(
-      name: 'Atuganile Silimuntu',
-      id: 'STU-2023-001',
-      photoUrl:
-          'https://images.unsplash.com/photo-1546525848-3ce03ca516f6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YmxhY2slMjBzdHVkZW50fGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=600',
-      status: 'Active',
-      program: 'Water Engineering',
-      yearLevel: '3rd Year',
-      gpa: '3.8',
-      enrolledDate: '09/08/2021',
-    ),
-    Student(
-      name: 'Mzimba Chirwa',
-      id: 'STU-2023-003',
-      photoUrl:
-          'https://plus.unsplash.com/premium_photo-1667520263477-0af7d9c33d67?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8YmxhY2slMjBzdHVkZW50fGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=600',
-      status: 'Active',
-      program: 'Forensic Science',
-      yearLevel: '2nd Year',
-      gpa: '3.5',
-      enrolledDate: '03/13/2022',
-    ),
-    Student(
-      name: 'Ananieli Mosha',
-      id: 'STU-2023-004',
-      photoUrl:
-          'https://plus.unsplash.com/premium_photo-1682089892133-556bde898f2c?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c3R1ZGVudCUyMHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=600',
-      status: 'Active',
-      program: 'Computer Science',
-      yearLevel: '3rd Year',
-      gpa: '3.8',
-      enrolledDate: '09/08/2021',
-    ),
-    Student(
-      name: 'Mpoki Mambale',
-      id: 'STU-2023-002',
-      photoUrl:
-          'https://t4.ftcdn.net/jpg/02/14/74/61/360_F_214746128_31JkeaP6rU0NzzzdFC4khGkmqc8noe6h.jpg',
-      status: 'Active',
-      program: 'Business Administration',
-      yearLevel: '2nd Year',
-      gpa: '3.5',
-      enrolledDate: '03/13/2022',
-    ),
-  ];
-
   // ──────────────────────────── VIEW DIALOG ─────────────────────────────
-
-  void _showStudentDetails(Student student) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          title: Row(
-            children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundImage: NetworkImage(student.photoUrl),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  student.name,
-                  style: GoogleFonts.poppins(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Divider(),
-              Text(
-                'Student ID: ${student.id}',
-                style: GoogleFonts.poppins(fontSize: 18),
-              ),
-              Text(
-                'Status: ${student.status}',
-                style: GoogleFonts.poppins(fontSize: 18),
-              ),
-              Text(
-                'Program: ${student.program}',
-                style: GoogleFonts.poppins(fontSize: 18),
-              ),
-              Text(
-                'Year Level: ${student.yearLevel}',
-                style: GoogleFonts.poppins(fontSize: 18),
-              ),
-              Text(
-                'GPA: ${student.gpa}',
-                style: GoogleFonts.poppins(fontSize: 18),
-              ),
-              Text(
-                'Enrolled Date: ${student.enrolledDate}',
-                style: GoogleFonts.poppins(fontSize: 18),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(
-                'Close',
-                style: GoogleFonts.poppins(color: Colors.indigo),
-              ),
-            ),
-
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-                _showEditForm(student);
-              },
-              child: Container(
-                width: 60,
-                height: 30,
-                decoration: BoxDecoration(
-                  color: Colors.lightBlue,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Center(
-                  child: Text(
-                    'Edit',
-                    style: GoogleFonts.poppins(
-                      fontSize: 13,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   // ──────────────────────────── EDIT FORM ─────────────────────────────
 
@@ -529,7 +388,13 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                                   cells: [
                                     DataCell(
                                       InkWell(
-                                        onTap: () => _showStudentDetails(s),
+                                        onTap:
+                                            () =>
+                                                ViewStudent.showStudentDetails(
+                                                  context,
+                                                  s,
+                                                  onEdit: _showEditForm,
+                                                ),
                                         child: CircleAvatar(
                                           radius: 20,
                                           backgroundImage: NetworkImage(
@@ -586,11 +451,14 @@ class _StudentRegistryScreenState extends State<StudentRegistryScreen> {
                                       ),
                                     ),
                                     DataCell(
-                                      Text(s.gpa, style: GoogleFonts.poppins()),
-                                    ),
-                                    DataCell(
                                       InkWell(
-                                        onTap: () => _showStudentDetails(s),
+                                        onTap:
+                                            () =>
+                                                ViewStudent.showStudentDetails(
+                                                  context,
+                                                  s,
+                                                  onEdit: _showEditForm,
+                                                ),
                                         child: Container(
                                           width: 60,
                                           height: 30,
