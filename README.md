@@ -2,7 +2,7 @@
 
 A modern, efficient, and user-friendly student registration and management system built with Flutter.
 
-![Banner](assets/banner.png)
+![Banner](assets/register.png)
 
 ## Table of Contents
 
