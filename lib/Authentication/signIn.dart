@@ -14,7 +14,7 @@ class Loginpage extends StatefulWidget {
 
 class _LoginpageState extends State<Loginpage> {
   bool _isObscured = true;
-  // Function to toggle password visibility
+
   void _toggleVisibility() {
     setState(() {
       _isObscured = !_isObscured;
@@ -30,156 +30,205 @@ class _LoginpageState extends State<Loginpage> {
         backgroundColor: Color.fromARGB(255, 36, 48, 79),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: 100),
-            Center(
-              child: Text(
-                'Welcome Back!',
-                style: GoogleFonts.poppins(
-                  fontSize: 30,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+        child: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: MediaQuery.of(context).size.height * 0.02,
             ),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.only(left: 35, right: 20),
-              child: Text(
-                "Please enter your credentials below, to continue accessing your account.",
-                style: GoogleFonts.poppins(fontSize: 18, color: Colors.white),
-              ),
-            ),
-            SizedBox(height: 20),
-            Container(
-              height: 500,
-              width: double.maxFinite,
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.15),
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(30),
-                  topLeft: Radius.circular(30),
+            child: Column(
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height * 0.08),
+                Text(
+                  'Welcome Back!',
+                  style: GoogleFonts.poppins(
+                    fontSize: MediaQuery.of(context).size.width * 0.07,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              child: Column(
-                children: [
-                  SizedBox(height: 40),
-                  Container(
-                    height: 50,
-                    width: 270,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(26),
-                      color: Colors.white,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: TextField(
-                        style: GoogleFonts.poppins(),
-                        decoration: InputDecoration(
-                          hintText: "Enter your email address",
-                          hintStyle: GoogleFonts.poppins(fontSize: 15),
-                          border: InputBorder.none,
-                        ),
-                      ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                Text(
+                  "Please enter your credentials below, to continue accessing your account.",
+                  style: GoogleFonts.poppins(
+                    fontSize: MediaQuery.of(context).size.width * 0.045,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                Container(
+                  constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height * 0.65,
+                    minHeight: MediaQuery.of(context).size.height * 0.55,
+                  ),
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.15),
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(30),
                     ),
                   ),
-                  SizedBox(height: 30),
-                  Container(
-                    height: 50,
-                    width: 270,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(26),
-                      color: Colors.white,
+                  child: Padding(
+                    padding: EdgeInsets.all(
+                      MediaQuery.of(context).size.width * 0.06,
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: TextField(
-                        style: GoogleFonts.poppins(),
-                        decoration: InputDecoration(
-                          hintText: "Enter your password",
-                          hintStyle: GoogleFonts.poppins(fontSize: 15),
-                          border: InputBorder.none,
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _isObscured
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                            ),
-                            onPressed:
-                                _toggleVisibility, // Toggles password visibility
-                          ),
-                        ),
-                        obscureText: _isObscured,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 30),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white24,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    height: 50,
-                    width: 170,
-                    child: TextButton(
-                      child: Text(
-                        "Login",
-                        style: GoogleFonts.poppins(
-                          fontSize: 18,
-                          color: Colors.white,
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => StudentRegistryScreen(),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 78),
-                    child: Row(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "New User?",
-                          style: GoogleFonts.poppins(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
+                        _buildTextField(
+                          "Enter your email address",
+                          false,
+                          Icons.email_outlined,
                         ),
-                        SizedBox(width: 40),
-                        InkWell(
-                          child: Text(
-                            "Register",
-                            style: GoogleFonts.poppins(
-                              fontSize: 18,
-                              color: Color.fromARGB(255, 36, 48, 79),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SignupPage(),
-                              ),
-                            );
-                          },
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.035,
                         ),
+                        _buildPasswordField(),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.04,
+                        ),
+                        _buildLoginButton(),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03,
+                        ),
+                        _buildRegisterRow(),
                       ],
                     ),
                   ),
-                ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField(String hintText, bool obscure, IconData? icon) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.065,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(26),
+        color: Colors.white,
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width * 0.05,
+          vertical: MediaQuery.of(context).size.height * 0.01,
+        ),
+        child: Row(
+          children: [
+            if (icon != null) ...[
+              Icon(icon, color: Color.fromARGB(255, 36, 48, 79)),
+              SizedBox(width: 10),
+            ],
+            Expanded(
+              child: TextField(
+                style: GoogleFonts.poppins(),
+                decoration: InputDecoration(
+                  hintText: hintText,
+                  hintStyle: GoogleFonts.poppins(fontSize: 15),
+                  border: InputBorder.none,
+                ),
+                obscureText: obscure,
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildPasswordField() {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.065,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(26),
+        color: Colors.white,
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width * 0.05,
+        ),
+        child: TextField(
+          style: GoogleFonts.poppins(),
+          obscureText: _isObscured,
+          decoration: InputDecoration(
+            hintText: "Enter your password",
+            hintStyle: GoogleFonts.poppins(fontSize: 15),
+            border: InputBorder.none,
+            suffixIcon: IconButton(
+              icon: Icon(
+                _isObscured ? Icons.visibility_off : Icons.visibility,
+                color: Color.fromARGB(255, 36, 48, 79),
+              ),
+              onPressed: _toggleVisibility,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLoginButton() {
+    return SizedBox(
+      width: double.infinity,
+      height: MediaQuery.of(context).size.height * 0.065,
+      child: TextButton(
+        style: TextButton.styleFrom(
+          backgroundColor: Colors.white24,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
+        child: Text(
+          "Login",
+          style: GoogleFonts.poppins(fontSize: 18, color: Colors.white),
+        ),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => StudentRegistryScreen()),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildRegisterRow() {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "New User?",
+              style: GoogleFonts.poppins(
+                fontSize: MediaQuery.of(context).size.width * 0.045,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.03),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignupPage()),
+                );
+              },
+              child: Text(
+                "Register",
+                style: GoogleFonts.poppins(
+                  fontSize: MediaQuery.of(context).size.width * 0.045,
+                  color: Color.fromARGB(255, 36, 48, 79),
+                  fontWeight: FontWeight.bold,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
