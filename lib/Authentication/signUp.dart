@@ -46,7 +46,10 @@ class _SignupPageState extends State<SignupPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Account created successfully!'),
+            content: Text(
+              'Account created successfully!',
+              style: GoogleFonts.poppins(),
+            ),
             backgroundColor: Colors.green,
           ),
         );
