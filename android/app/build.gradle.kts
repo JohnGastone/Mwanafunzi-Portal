@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.mwanafunziportal"
-    compileSdk = 35
+    compileSdk = flutter.compileSdkVersion
     ndkVersion = "29.0.14206865"
 
     compileOptions {
@@ -24,10 +24,10 @@ android {
         applicationId = "com.example.mwanafunziportal"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = 24
-        targetSdk = 35
+        minSdk = flutter.minSdkVersion
+        targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
-        versionName = 1.1.0
+        versionName = flutter.versionName
     }
 
     buildTypes {
