@@ -14,11 +14,48 @@ class Loginpage extends StatefulWidget {
 
 class _LoginpageState extends State<Loginpage> {
   bool _isObscured = true;
+  bool isSubmitting = false;
+
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   void _toggleVisibility() {
     setState(() {
       _isObscured = !_isObscured;
     });
+  }
+
+  Future<void> _handleSignin() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        isSubmitting = true;
+      });
+
+      // Simulate API call
+      await Future.delayed(Duration(seconds: 2));
+
+      setState(() {
+        isSubmitting = false;
+      });
+
+      // Navigate to login or show success message
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Loged in successfully!',
+              style: GoogleFonts.poppins(),
+            ),
+            backgroundColor: Colors.green,
+          ),
+        );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => StudentRegistryScreen()),
+        );
+      }
+    }
   }
 
   @override
@@ -72,27 +109,55 @@ class _LoginpageState extends State<Loginpage> {
                     padding: EdgeInsets.all(
                       MediaQuery.of(context).size.width * 0.06,
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _buildTextField(
-                          "Enter your email address",
-                          false,
-                          Icons.email_outlined,
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.035,
-                        ),
-                        _buildPasswordField(),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.04,
-                        ),
-                        _buildLoginButton(),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.03,
-                        ),
-                        _buildRegisterRow(),
-                      ],
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _buildTextFormField(
+                            "Enter your email address",
+                            emailController.text.isEmpty ? false : false,
+                            Icons.email_outlined,
+                            emailController,
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your email';
+                              }
+                              final emailRegex = RegExp(
+                                r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                              );
+                              if (!emailRegex.hasMatch(value)) {
+                                return 'Please enter a valid email';
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.035,
+                          ),
+                          _buildPasswordField(
+                            passwordController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your password';
+                              }
+                              if (value.length < 6) {
+                                return 'Password must be at least 6 characters';
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.04,
+                          ),
+                          _buildLoginButton(),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.03,
+                          ),
+                          _buildRegisterRow(),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -104,7 +169,14 @@ class _LoginpageState extends State<Loginpage> {
     );
   }
 
-  Widget _buildTextField(String hintText, bool obscure, IconData? icon) {
+  Widget _buildTextFormField(
+    String hintText,
+    bool obscure,
+    IconData? icon,
+    TextEditingController controller, {
+    TextInputType keyboardType = TextInputType.text,
+    String? Function(String?)? validator,
+  }) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.065,
       decoration: BoxDecoration(
@@ -123,8 +195,11 @@ class _LoginpageState extends State<Loginpage> {
               SizedBox(width: 10),
             ],
             Expanded(
-              child: TextField(
+              child: TextFormField(
                 style: GoogleFonts.poppins(),
+                controller: controller,
+                keyboardType: keyboardType,
+                validator: validator,
                 decoration: InputDecoration(
                   hintText: hintText,
                   hintStyle: GoogleFonts.poppins(fontSize: 15),
@@ -139,7 +214,10 @@ class _LoginpageState extends State<Loginpage> {
     );
   }
 
-  Widget _buildPasswordField() {
+  Widget _buildPasswordField(
+    TextEditingController? controller, {
+    String? Function(String?)? validator,
+  }) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.065,
       decoration: BoxDecoration(
@@ -150,9 +228,11 @@ class _LoginpageState extends State<Loginpage> {
         padding: EdgeInsets.symmetric(
           horizontal: MediaQuery.of(context).size.width * 0.05,
         ),
-        child: TextField(
+        child: TextFormField(
           style: GoogleFonts.poppins(),
+          controller: controller,
           obscureText: _isObscured,
+          validator: validator,
           decoration: InputDecoration(
             hintText: "Enter your password",
             hintStyle: GoogleFonts.poppins(fontSize: 15),
@@ -171,26 +251,51 @@ class _LoginpageState extends State<Loginpage> {
   }
 
   Widget _buildLoginButton() {
-    return SizedBox(
-      width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.065,
-      child: TextButton(
-        style: TextButton.styleFrom(
-          backgroundColor: Colors.white24,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
+    return InkWell(
+      onTap: isSubmitting ? null : _handleSignin,
+      child: Container(
+        width: double.infinity,
+        height: 38,
+        decoration: BoxDecoration(
+          color: isSubmitting ? Colors.white.withOpacity(0.6) : Colors.white,
+          borderRadius: BorderRadius.circular(26),
         ),
-        child: Text(
-          "Login",
-          style: GoogleFonts.poppins(fontSize: 18, color: Colors.white),
+        child: Center(
+          child:
+              isSubmitting
+                  ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            const Color.fromARGB(255, 36, 48, 79),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 12),
+                      Text(
+                        'Taking you onboard...',
+                        style: GoogleFonts.poppins(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: const Color.fromARGB(255, 36, 48, 79),
+                        ),
+                      ),
+                    ],
+                  )
+                  : Text(
+                    'Log In',
+                    style: GoogleFonts.poppins(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: const Color.fromARGB(255, 36, 48, 79),
+                    ),
+                  ),
         ),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => StudentRegistryScreen()),
-          );
-        },
       ),
     );
   }
