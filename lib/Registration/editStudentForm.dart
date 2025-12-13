@@ -56,7 +56,7 @@ class EditStudent {
       }
     }
 
-    void submitForm() {
+    void submitForm(BuildContext dialogContext) {
       if (formKey.currentState!.validate()) {
         student.name = nameController.text;
         student.id = idController.text;
@@ -69,7 +69,7 @@ class EditStudent {
         if (selectedImage != null) {
           student.photoUrl = selectedImage!.path;
         }
-        Navigator.pop(context);
+        Navigator.pop(dialogContext);
         onSave(); // Trigger the parent widget to refresh
       }
     }
@@ -236,7 +236,7 @@ class EditStudent {
                   child: Text('Cancel', style: GoogleFonts.poppins()),
                 ),
                 ElevatedButton(
-                  onPressed: submitForm,
+                  onPressed: () => submitForm(context),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF6366F1),
                     foregroundColor: Colors.white,
