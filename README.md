@@ -25,7 +25,6 @@ Mwanafunzi Portal is a streamlined student registration app developed using Flut
 
 This project demonstrates proficiency in Flutter UI development, modern state management patterns, and clean code practices.
 
----
 
 ## Features
 
