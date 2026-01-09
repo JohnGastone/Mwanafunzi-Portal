@@ -1,13 +1,11 @@
 // ignore_for_file: unused_element
 
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:mwanafunziportal/Models/student.dart' show students, Student;
 import 'package:mwanafunziportal/Registration/registerStudent.dart';
 import 'package:mwanafunziportal/Registration/viewStudent.dart';
-import 'package:mwanafunziportal/Registration/editStudentForm.dart'; // Add this import
+// Add this import
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
